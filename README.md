@@ -94,7 +94,36 @@ en charge de `prefers-reduced-motion`.
 Les contrôles automatisés ne remplacent pas une vérification manuelle au
 clavier, avec lecteur d’écran et à plusieurs niveaux de zoom.
 
-## Déploiement recommandé : Vercel
+## Production
+
+Le portfolio est publié sur :
+
+https://khaled-zouari-portfolio.vercel.app
+
+## Deployment
+
+Hébergement : Vercel.
+
+## Build
+
+```bash
+npm run build
+```
+
+Le dossier de sortie est `dist`.
+
+## Environment
+
+`SITE_URL` contient l’URL canonique de production. Cette variable est configurée
+dans Vercel pour les environnements Production et Preview.
+
+## CI/CD
+
+GitHub Actions valide le lint, les types, les tests, le build, les liens et la
+sécurité. Vercel doit être relié au dépôt GitHub pour redéployer automatiquement
+chaque push sur `main`.
+
+## Déploiement Vercel
 
 1. Importer le dépôt GitHub dans Vercel.
 2. Conserver le framework détecté `Astro`.
@@ -105,6 +134,9 @@ clavier, avec lecteur d’écran et à plusieurs niveaux de zoom.
 
 Vercel fournit HTTPS, previews de pull requests et domaine personnalisé. Le site
 reste un export statique et peut aussi être hébergé sur Netlify ou GitHub Pages.
+
+Le fichier `public/.well-known/security.txt` expire le 30 septembre 2027 et doit
+être renouvelé avant cette date.
 
 ## Mesurer Lighthouse
 
