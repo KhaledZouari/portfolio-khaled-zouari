@@ -1,0 +1,23 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { siteConfig, type ProjectSlug } from '../../../config/site';
+import { getProject } from '../../../data/projects';
+import CaseStudy from '../../../components/projects/CaseStudy.astro';
+import '../../../styles/global.css';
+
+export function getStaticPaths() {
+  return siteConfig.projectSlugs.map((slug) => ({ params: { slug } }));
+}
+
+const { slug } = Astro.params as { slug: ProjectSlug };
+const project = getProject(slug);
+if (!project) throw new Error(`Unknown project: ${slug}`);
+---
+
+<BaseLayout
+  lang="en"
+  title={`${project.name} — Case study by Khaled Zouari`}
+  description={project.summary.en}
+>
+  <CaseStudy locale="en" {project} />
+</BaseLayout>

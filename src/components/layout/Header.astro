@@ -1,0 +1,51 @@
+---
+import type { Locale } from '../../config/site';
+const { locale } = Astro.props as { locale: Locale };
+const fr = locale === 'fr';
+const home = fr ? '/' : '/en/';
+const alt = fr ? '/en/' : '/';
+const items = [['home', fr ? 'Accueil' : 'Home'], ['projects', fr ? 'Projets' : 'Projects'], ['skills', fr ? 'Compétences' : 'Skills'], ['experience', fr ? 'Expérience' : 'Experience'], ['education', fr ? 'Formation' : 'Education'], ['contact', 'Contact']] as const;
+---
+<div class="scroll-progress" aria-hidden="true"><progress data-scroll-progress max="100" value="0"></progress></div>
+<header class="site-header">
+  <nav class="nav container" aria-label={fr ? 'Navigation principale' : 'Main navigation'}>
+    <a class="brand" href={home} data-nav-section="home" aria-label={fr ? 'KZ. — Accueil de Khaled Zouari' : 'KZ. — Khaled Zouari home'}>KZ<span aria-hidden="true">.</span></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation" aria-label={fr ? 'Ouvrir le menu' : 'Open menu'} data-menu-toggle><span aria-hidden="true"></span><span aria-hidden="true"></span></button>
+    <div class="nav-links" id="primary-navigation" data-nav-menu>
+      {items.map(([id, label]) => <a href={id === 'home' ? home : `${home}#${id}`} data-nav-section={id}>{label}</a>)}
+      <div class="nav-utilities"><a class="lang-link mono" href={alt} hreflang={fr ? 'en' : 'fr'}>{fr ? 'EN' : 'FR'}</a><button class="theme-toggle" type="button" aria-label={fr ? 'Changer le thème' : 'Change theme'} data-theme-toggle><span aria-hidden="true">◐</span></button></div>
+    </div>
+  </nav>
+</header>
+<script>
+  const fr = document.documentElement.lang === 'fr';
+  const root = document.documentElement;
+  const stored = localStorage.getItem('theme');
+  if (stored) root.dataset.theme = stored;
+  else if (matchMedia('(prefers-color-scheme: dark)').matches) root.dataset.theme = 'dark';
+  document.querySelector('[data-theme-toggle]')?.addEventListener('click', () => { const next = root.dataset.theme === 'dark' ? 'light' : 'dark'; root.dataset.theme = next; localStorage.setItem('theme', next); });
+  const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+  const menu = document.querySelector<HTMLElement>('[data-nav-menu]');
+  const setMenu = (open: boolean) => {
+    if (!(toggle instanceof HTMLButtonElement) || !(menu instanceof HTMLElement)) return;
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-label', open ? (fr ? 'Fermer le menu' : 'Close menu') : (fr ? 'Ouvrir le menu' : 'Open menu'));
+    menu.dataset.open = String(open); document.body.classList.toggle('menu-open', open);
+  };
+  toggle?.addEventListener('click', () => setMenu(toggle.getAttribute('aria-expanded') !== 'true'));
+  menu?.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => setMenu(false)));
+  document.addEventListener('keydown', (event) => { if (event.key === 'Escape' && toggle?.getAttribute('aria-expanded') === 'true') { setMenu(false); toggle?.focus(); } });
+  const sectionLinks = [...document.querySelectorAll('[data-nav-section]')];
+  const sections = ['home', 'projects', 'skills', 'experience', 'education', 'contact'].map((id) => id === 'home' ? document.querySelector('.hero') : document.getElementById(id)).filter(Boolean);
+  const setActive = (id: string) => sectionLinks.forEach((link) => { const active = link.getAttribute('data-nav-section') === id; if (active) link.setAttribute('aria-current', 'location'); else link.removeAttribute('aria-current'); });
+  if (sections.length) { const observer = new IntersectionObserver((entries) => { const visible = entries.filter((entry) => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0]; if (visible) setActive(visible.target.classList.contains('hero') ? 'home' : visible.target.id); }, { rootMargin: '-20% 0px -65% 0px', threshold: [0, .1, .3] }); sections.forEach((section) => { if (section) observer.observe(section); }); }
+  const progress = document.querySelector<HTMLProgressElement>('[data-scroll-progress]');
+  let progressScheduled = false;
+  const updateProgress = () => {
+    const max = document.documentElement.scrollHeight - innerHeight;
+    if (progress) progress.value = max > 0 ? Math.round((scrollY / max) * 100) : 0;
+    progressScheduled = false;
+  };
+  addEventListener('scroll', () => { if (!progressScheduled) { progressScheduled = true; requestAnimationFrame(updateProgress); } }, { passive: true });
+  updateProgress();
+</script>

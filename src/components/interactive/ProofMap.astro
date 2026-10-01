@@ -1,0 +1,29 @@
+---
+import type { Locale } from '../../config/site';
+import { skillEvidence as evidence } from '../../lib/interaction-model';
+const { locale } = Astro.props as { locale: Locale };
+const fr = locale === 'fr';
+---
+<div class="proof-map" data-proof-map>
+  <div><h3>{fr ? 'Une compétence, une preuve' : 'One skill, one proof'}</h3><p>{fr ? 'Sélectionnez une technologie pour afficher les projets qui la démontrent.' : 'Select a technology to display the projects that demonstrate it.'}</p></div>
+  <div class="proof-controls" aria-label={fr ? 'Technologies et projets associés' : 'Technologies and related projects'}>
+    {Object.entries(evidence).map(([technology, projects], index) => <button type="button" aria-pressed={index === 0 ? 'true' : 'false'} data-tech={technology} data-projects={projects.join('|')}><span>{technology}</span><small>{fr ? 'Utilisée dans' : 'Used in'} {projects.length} {fr ? 'projet(s)' : 'project(s)'}</small></button>)}
+  </div>
+  <div class="proof-result" aria-live="polite"><p>{fr ? 'Utilisée dans :' : 'Used in:'}</p><ul data-proof-result>{evidence.Java.map((project) => <li>{project}</li>)}</ul></div>
+</div>
+<script>
+  document.querySelectorAll('[data-proof-map]').forEach((map) => {
+    const buttons = map.querySelectorAll<HTMLButtonElement>('[data-tech]'); const result = map.querySelector<HTMLElement>('[data-proof-result]');
+    const activate = (button: HTMLButtonElement) => {
+      buttons.forEach((item) => item.setAttribute('aria-pressed', String(item === button)));
+      if (!result) return;
+      const items = (button.dataset.projects ?? '').split('|').filter(Boolean).map((project) => {
+        const item = document.createElement('li');
+        item.textContent = project;
+        return item;
+      });
+      result.replaceChildren(...items);
+    };
+    buttons.forEach((button) => { button.addEventListener('click', () => activate(button)); button.addEventListener('focus', () => activate(button)); button.addEventListener('mouseenter', () => activate(button)); });
+  });
+</script>

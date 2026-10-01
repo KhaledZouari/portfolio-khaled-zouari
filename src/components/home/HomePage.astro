@@ -1,0 +1,106 @@
+---
+import Header from '../layout/Header.astro';
+import Footer from '../layout/Footer.astro';
+import ProofMap from '../interactive/ProofMap.astro';
+import ArchitectureFlow from '../interactive/ArchitectureFlow.astro';
+import CopyEmail from '../interactive/CopyEmail.astro';
+import ProductionWorkflow from '../projects/ProductionWorkflow.astro';
+import ProjectArchitecture from '../projects/ProjectArchitecture.astro';
+import { profile } from '../../data/profile';
+import { projects, featuredProjects } from '../../data/projects';
+import { experiences } from '../../data/experience';
+import { education } from '../../data/education';
+import { skillGroups } from '../../data/skills';
+import type { Locale } from '../../config/site';
+import { Picture } from 'astro:assets';
+import portrait from '../../assets/khaled-zouari.png';
+
+const { locale } = Astro.props as { locale: Locale };
+const fr = locale === 'fr';
+const prefix = fr ? '' : '/en';
+const t = {
+  projects: fr ? 'Projets sélectionnés' : 'Selected projects',
+  projectsLead: fr ? 'Des applications métier complètes, documentées par leur code, leur architecture et leurs limites.' : 'Complete business applications documented through code, architecture and acknowledged limits.',
+  caseStudy: fr ? 'Étude de cas' : 'Case study',
+  repository: fr ? 'Code source' : 'Source code',
+};
+const personSchema = {
+  '@context': 'https://schema.org', '@type': 'Person', name: profile.name,
+  url: Astro.site?.toString(), email: `mailto:${profile.email}`,
+  sameAs: [profile.github, profile.linkedin],
+  address: { '@type': 'PostalAddress', addressLocality: 'Rouen', addressCountry: 'FR' },
+  alumniOf: [{ '@type': 'CollegeOrUniversity', name: 'ESIGELEC' }, { '@type': 'CollegeOrUniversity', name: 'Institut International de Technologie' }],
+};
+const production = featuredProjects.find((project) => project.slug === 'production-atelier')!;
+const premiumProjects = featuredProjects.filter((project) => project.slug !== 'production-atelier');
+---
+<Header {locale} />
+<main id="main">
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="hero-copy" data-reveal>
+        <div class="hero-identity">
+          <Picture class="hero-portrait" src={portrait} formats={['avif', 'webp']} widths={[160, 240]} sizes="(max-width: 420px) 80px, 104px" alt={fr ? 'Portrait professionnel de Khaled Zouari' : 'Professional portrait of Khaled Zouari'} loading="eager" fetchpriority="high" />
+          <div><p class="eyebrow">Full Stack · Java · React</p><p class="identity-location">Rouen, France · {fr ? 'Mobilité nationale' : 'Open across France'}</p></div>
+        </div>
+        <h1>Khaled Zouari</h1>
+        <p class="hero-role">{profile.role[locale]}</p>
+        <p class="lead">{fr ? 'Je conçois des applications métier de bout en bout : interfaces, API sécurisées, modèles de données et outils de suivi.' : 'I build business applications end to end: interfaces, secured APIs, data models and monitoring tools.'}</p>
+        <p class="availability">{profile.availability[locale]}</p>
+        <div class="hero-actions">
+          <a class="button primary" href="#projects">{fr ? 'Voir mes projets' : 'View my projects'}</a>
+          <a class="button" href={profile.cv} download>{fr ? 'Télécharger mon CV' : 'Download my résumé'}</a>
+        </div>
+        <div class="social-links">
+          <a href={profile.github} target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+          <a href={profile.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
+          <a href={`mailto:${profile.email}`}>{profile.email}</a>
+        </div>
+      </div>
+      <ArchitectureFlow {locale} />
+    </div>
+  </section>
+
+  <section class="section" id="projects">
+    <div class="container">
+      <div class="section-head" data-reveal><p class="eyebrow">01 · {fr ? 'Travaux' : 'Work'}</p><h2>{t.projects}</h2><p class="lead">{t.projectsLead}</p></div>
+      <article class="featured-project" data-reveal>
+        <div class="featured-project-copy">
+          <span class="project-index">01 / {production.kind[locale]}</span>
+          <h3>{production.name}</h3><p class="lead">{production.summary[locale]}</p><p>{production.context[locale]}</p>
+          <ul class="tags" aria-label="Technologies">{production.stack.slice(0, 6).map((item) => <li class="tag">{item}</li>)}</ul>
+          <div class="card-actions"><a class="button primary" href={`${prefix}/projects/${production.slug}/`}>{t.caseStudy} →</a><a class="button" href={production.repository} target="_blank" rel="noopener noreferrer">GitHub ↗</a></div>
+        </div>
+        <div class="featured-project-visual"><p class="eyebrow">{fr ? 'Workflow métier' : 'Business workflow'}</p><ProductionWorkflow {locale} compact /></div>
+      </article>
+      <div class="projects-grid premium-projects">
+        {premiumProjects.map((project, index) => (
+          <article class="project-card" data-reveal>
+            <span class="project-index">0{index + 2} / {project.kind[locale]}</span>
+            <h3>{project.name}</h3><p>{project.summary[locale]}</p>
+            {project.slug !== 'production-atelier' && <ProjectArchitecture {locale} project={project.slug} />}
+            <ul class="tags" aria-label="Technologies">{project.stack.slice(0, 5).map((item) => <li class="tag">{item}</li>)}</ul>
+            <div class="card-actions"><a href={`${prefix}/projects/${project.slug}/`}>{t.caseStudy} →</a><a href={project.repository} target="_blank" rel="noopener noreferrer">GitHub ↗</a></div>
+          </article>
+        ))}
+      </div>
+      <div class="projects-grid complementary-projects">
+        {projects.filter((p) => !p.featured).map((project) => (
+          <article class="project-card compact-card" data-reveal><span class="project-index">{project.kind[locale]}</span><h3>{project.name}</h3><p>{project.summary[locale]}</p>{project.slug === 'enterprise-bi' && <ProjectArchitecture {locale} project="enterprise-bi" />}<div class="card-actions"><a href={project.repository} target="_blank" rel="noopener noreferrer">GitHub ↗</a></div></article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="skills"><div class="container"><div class="section-head"><p class="eyebrow">02 · {fr ? 'Compétences' : 'Skills'}</p><h2>{fr ? 'Technologies mises en pratique' : 'Technologies put into practice'}</h2><p class="lead">{fr ? 'Pas de jauges abstraites : chaque technologie principale renvoie à un projet concret.' : 'No abstract ratings: each core technology connects to concrete project work.'}</p></div><ProofMap {locale} /><div class="skills-grid skills-grid-spaced">{skillGroups.map((group) => <div class="skill-group"><h3>{group.name[locale]}</h3><ul class="tags">{group.items.map((item) => <li class="tag">{item}</li>)}</ul></div>)}</div></div></section>
+
+  <section class="section" id="experience"><div class="container"><div class="section-head"><p class="eyebrow">03 · {fr ? 'Parcours' : 'Background'}</p><h2>{fr ? 'Expériences professionnelles' : 'Professional experience'}</h2></div><div class="timeline">{experiences.map((item) => <article class="timeline-item"><div class="timeline-meta">{item.period}<br />{item.company}</div><div class="timeline-copy"><h3>{item.role[locale]}</h3><p>{item.details[locale]}</p></div></article>)}</div></div></section>
+
+  <section class="section" id="education"><div class="container"><div class="section-head"><p class="eyebrow">04 · {fr ? 'Formation' : 'Education'}</p><h2>{fr ? 'Parcours d’ingénieur' : 'Engineering education'}</h2></div><div class="timeline">{education.map((item) => <article class="timeline-item"><div class="timeline-meta">{item.period}</div><div class="timeline-copy"><h3>{item.school}</h3><p>{item.course[locale]}</p></div></article>)}</div></div></section>
+
+  <section class="section" id="about"><div class="container about-grid"><div><p class="eyebrow">05 · {fr ? 'À propos' : 'About'}</p><h2>{fr ? 'Relier le métier au code' : 'Connecting business and code'}</h2></div><div class="section-head"><p class="lead">{fr ? 'Mon parcours combine développement logiciel, bases de données et compréhension des opérations en environnement industriel. Je recherche un stage où contribuer à des fonctionnalités utiles, de la conception jusqu’à la validation.' : 'My background combines software development, databases and an understanding of operations in an industrial environment. I am looking for an internship where I can contribute to useful features from design through validation.'}</p><div class="language-list"><span>{fr ? 'Arabe · langue maternelle' : 'Arabic · native'}</span><span>{fr ? 'Français · B2' : 'French · B2'}</span><span>{fr ? 'Anglais · B2' : 'English · B2'}</span></div></div></div></section>
+
+  <section class="section" id="contact"><div class="container contact-grid"><div><p class="eyebrow">06 · Contact</p><h2>{fr ? 'Vous cherchez un stagiaire Full Stack pour mars 2027 ?' : 'Looking for a full-stack intern for March 2027?'}</h2></div><div class="contact-box"><p>{fr ? 'Disponible pour un stage d’ingénieur logiciel ou développeur Full Stack à partir du 1er mars 2027.' : 'Available for a software engineering or full-stack internship from 1 March 2027.'}</p><CopyEmail {locale} email={profile.email} /><div class="social-links"><a href={profile.github} target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href={profile.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn ↗</a><a href={profile.cv} download>CV ↓</a></div></div></div></section>
+</main>
+<Footer {locale} />
+<script type="application/ld+json" set:html={JSON.stringify(personSchema)} />

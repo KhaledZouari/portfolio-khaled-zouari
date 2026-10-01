@@ -1,0 +1,19 @@
+---
+interface Props { project: string; poster: string; videoWebm: string; videoMp4?: string; caption: string; duration: string; }
+const { project, poster, videoWebm, videoMp4, caption, duration } = Astro.props;
+---
+<figure class="project-demo" data-project-demo data-webm={videoWebm} data-mp4={videoMp4 ?? ''} data-poster={poster}>
+  <div class="demo-stage"><img src={poster} alt="" width="1280" height="720" loading="lazy" decoding="async" /><button type="button" data-demo-trigger aria-label={`Voir la démonstration de ${project}`}>▶ <span>Voir la démonstration</span></button></div>
+  <figcaption>{caption} <span>· {duration}</span></figcaption>
+</figure>
+<script>
+  document.querySelectorAll<HTMLElement>('[data-project-demo]').forEach((demo) => {
+    demo.querySelector('[data-demo-trigger]')?.addEventListener('click', () => {
+      if (demo.querySelector('video')) return;
+      const video = document.createElement('video'); video.controls = true; video.muted = true; video.playsInline = true; video.preload = 'metadata'; video.poster = demo.dataset.poster ?? '';
+      const sources: Array<[string, string | undefined]> = [['video/webm', demo.dataset.webm], ['video/mp4', demo.dataset.mp4]];
+      sources.forEach(([type, src]) => { if (!src) return; const source = document.createElement('source'); source.type = type; source.src = src; video.append(source); });
+      demo.querySelector('.demo-stage')?.replaceChildren(video); video.focus();
+    }, { once: true });
+  });
+</script>

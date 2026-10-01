@@ -1,0 +1,31 @@
+---
+import type { Locale } from '../../config/site';
+const { locale, project } = Astro.props as { locale: Locale; project: string };
+const fr = locale === 'fr';
+const architectures: Record<string, { nodes: string[]; notes?: string[] }> = {
+  carpooling: { nodes: [fr ? 'Voyageur · Conducteur · Administrateur' : 'Traveller · Driver · Administrator', 'API REST', 'Spring Boot + Spring Security', 'MySQL'], notes: [fr ? 'Recherche · réservation · validation · avis' : 'Search · booking · validation · review'] },
+  edutrack: { nodes: ['Angular', fr ? 'API sécurisée' : 'Secured API', 'Spring Boot', fr ? 'Services / logique métier' : 'Services / business logic', 'PostgreSQL'] },
+  'enterprise-bi': { nodes: ['Sources', 'SSIS', 'Data Warehouse', 'SSAS', 'MDX', 'ASP.NET Dashboard'] },
+};
+const patterns = [
+  ['Factory', fr ? 'Crée les formes et sélectionne le repository.' : 'Creates shapes and selects the repository.'],
+  ['Command', fr ? 'Alimente l’historique Undo / Redo.' : 'Powers the undo / redo history.'],
+  ['Decorator', fr ? 'Compose les effets visuels des formes.' : 'Composes visual effects on shapes.'],
+  ['Repository', fr ? 'Isole SQLite, JSON et la persistance.' : 'Isolates SQLite, JSON and persistence.'],
+  ['Singleton', fr ? 'Partage les services qui nécessitent une instance unique.' : 'Shares services that require one instance.'],
+  ['Strategy', fr ? 'Sélectionne la stratégie de journalisation.' : 'Selects the logging strategy.'],
+  ['Observer', fr ? 'Notifie l’interface après les commandes.' : 'Notifies the interface after commands.'],
+  ['Adapter', fr ? 'Adapte le canvas pour l’export PNG.' : 'Adapts the canvas for PNG export.'],
+];
+const architecture = architectures[project];
+---
+{project === 'minidrawfx' ? (
+  <div class="pattern-map" aria-label={fr ? 'Patterns utilisés dans MiniDrawFX' : 'Patterns used in MiniDrawFX'}>
+    {patterns.map(([name, description]) => <button type="button" data-pattern-description={description}><strong>{name}</strong><span>{description}</span></button>)}
+  </div>
+) : architecture ? (
+  <div class="project-architecture" role="img" aria-label={architecture.nodes.join(' → ')}>
+    {architecture.nodes.map((node, index) => <div class="architecture-node"><strong>{node}</strong>{index < architecture.nodes.length - 1 && <i aria-hidden="true">↓</i>}</div>)}
+    {architecture.notes?.map((note) => <p class="architecture-note">{note}</p>)}
+  </div>
+) : null}

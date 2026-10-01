@@ -1,0 +1,5 @@
+---
+interface ImageItem { src: string; alt: string; caption: string; width: number; height: number; }
+const { images = [] } = Astro.props as { images?: ImageItem[] };
+---
+{images.length > 0 && <figure class="project-gallery">{images.map((image) => <div class="gallery-item"><img src={image.src} alt={image.alt} width={image.width} height={image.height} loading="lazy" decoding="async" /><figcaption>{image.caption}</figcaption></div>)}</figure>}

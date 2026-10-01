@@ -1,0 +1,8 @@
+---
+import type { Locale } from '../../config/site';
+const { locale, compact = false } = Astro.props as { locale: Locale; compact?: boolean };
+const steps = locale === 'fr' ? ['Ordre de fabrication', 'Panier', 'Opération', 'Employé', 'Rendement', 'Dashboard'] : ['Manufacturing order', 'Basket', 'Operation', 'Employee', 'Efficiency', 'Dashboard'];
+---
+<div class:list={['production-workflow', { compact }]} role="img" aria-label={steps.join(' → ')} data-reveal>
+  {steps.map((step, index) => <div class="workflow-item" data-step={index}><span>{String(index + 1).padStart(2, '0')}</span><strong>{step}</strong>{index < steps.length - 1 && <i aria-hidden="true">→</i>}</div>)}
+</div>

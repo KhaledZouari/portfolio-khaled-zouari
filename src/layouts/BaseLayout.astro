@@ -1,0 +1,60 @@
+---
+interface Props {
+  lang: 'fr' | 'en';
+  title: string;
+  description: string;
+  image?: string;
+}
+
+const { lang, title, description, image = '/og-cover.svg' } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const frenchPath = lang === 'fr' ? Astro.url.pathname : Astro.url.pathname.replace(/^\/en/, '') || '/';
+const englishPath = lang === 'en' ? Astro.url.pathname : `/en${Astro.url.pathname === '/' ? '/' : Astro.url.pathname}`;
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#f7f6f2" />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="fr" href={new URL(frenchPath, Astro.site)} />
+    <link rel="alternate" hreflang="en" href={new URL(englishPath, Astro.site)} />
+    <link rel="alternate" hreflang="x-default" href={new URL(frenchPath, Astro.site)} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={new URL(image, Astro.site)} />
+    <meta property="og:locale" content={lang === 'fr' ? 'fr_FR' : 'en_GB'} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={new URL(image, Astro.site)} />
+    <script>document.documentElement.classList.add('js');</script>
+    <title>{title}</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">{lang === 'fr' ? 'Aller au contenu' : 'Skip to content'}</a>
+    <slot />
+    <script>
+      const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const revealed = document.querySelectorAll<HTMLElement>('[data-reveal]');
+      if (reduceMotion || !('IntersectionObserver' in window)) {
+        revealed.forEach((item) => item.dataset.visible = 'true');
+      } else {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            if (entry.target instanceof HTMLElement) entry.target.dataset.visible = 'true';
+            observer.unobserve(entry.target);
+          });
+        }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
+        revealed.forEach((item) => observer.observe(item));
+      }
+    </script>
+  </body>
+</html>

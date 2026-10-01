@@ -1,0 +1,42 @@
+---
+import Header from '../layout/Header.astro';
+import Footer from '../layout/Footer.astro';
+import type { Locale } from '../../config/site';
+import type { Project } from '../../data/projects';
+import ProductionWorkflow from './ProductionWorkflow.astro';
+import ProjectArchitecture from './ProjectArchitecture.astro';
+import ProjectGallery from './ProjectGallery.astro';
+const { locale, project } = Astro.props as { locale: Locale; project: Project };
+const fr = locale === 'fr';
+const home = fr ? '/' : '/en/';
+const labels = {
+  context: fr ? 'Contexte' : 'Context', role: fr ? 'Mon rôle' : 'My role',
+  features: fr ? 'Fonctionnalités' : 'Features', architecture: 'Architecture',
+  choices: fr ? 'Choix techniques' : 'Technical choices', security: fr ? 'Sécurité' : 'Security',
+  tests: 'Tests', tradeoffs: fr ? 'Difficultés et compromis' : 'Challenges and trade-offs',
+  improvements: fr ? 'Ce que j’améliorerais' : 'What I would improve', stack: 'Stack',
+};
+---
+<Header {locale} />
+<main id="main">
+  <header class="case-hero"><div class="container"><p class="eyebrow">{project.kind[locale]}</p><h1>{project.name}</h1><p class="lead">{project.summary[locale]}</p><div class="case-meta">{project.stack.map((item) => <span class="tag">{item}</span>)}</div></div></header>
+  <div class="container case-layout">
+    <nav class="case-nav" aria-label={fr ? 'Sommaire de l’étude de cas' : 'Case study contents'}>
+      {Object.entries(labels).map(([key, label]) => <a href={`#${key}`}>{label}</a>)}
+      <a href={home}>← {fr ? 'Tous les projets' : 'All projects'}</a>
+    </nav>
+    <article>
+      <section class="case-section" id="context"><p class="eyebrow">01</p><h2>{labels.context}</h2><p>{project.context[locale]}</p></section>
+      <section class="case-section" id="role"><p class="eyebrow">02</p><h2>{labels.role}</h2><p>{project.role[locale]}</p></section>
+      <section class="case-section" id="features"><p class="eyebrow">03</p><h2>{labels.features}</h2><ul>{project.features.map((item) => <li>{item[locale]}</li>)}</ul></section>
+      <section class="case-section" id="architecture"><p class="eyebrow">04</p><h2>{labels.architecture}</h2><p>{project.architecture[locale]}</p>{project.slug === 'production-atelier' ? <ProductionWorkflow {locale} /> : <ProjectArchitecture {locale} project={project.slug} />}</section>
+      <section class="case-section" id="choices"><p class="eyebrow">05</p><h2>{labels.choices}</h2><ul>{project.choices.map((item) => <li>{item[locale]}</li>)}</ul></section>
+      <section class="case-section" id="security"><p class="eyebrow">06</p><h2>{labels.security}</h2><p>{project.security[locale]}</p></section>
+      <section class="case-section" id="tests"><p class="eyebrow">07</p><h2>{labels.tests}</h2><p>{project.tests[locale]}</p></section>
+      <section class="case-section" id="tradeoffs"><p class="eyebrow">08</p><h2>{labels.tradeoffs}</h2><p>{project.tradeoffs[locale]}</p></section>
+      <section class="case-section" id="improvements"><p class="eyebrow">09</p><h2>{labels.improvements}</h2><ul>{project.improvements.map((item) => <li>{item[locale]}</li>)}</ul></section>
+      <section class="case-section" id="stack"><p class="eyebrow">10</p><h2>{labels.stack}</h2><ul class="tags">{project.stack.map((item) => <li class="tag">{item}</li>)}</ul><ProjectGallery images={[]} /><p><a class="button primary" href={project.repository} target="_blank" rel="noopener noreferrer">GitHub ↗</a></p></section>
+    </article>
+  </div>
+</main>
+<Footer {locale} />

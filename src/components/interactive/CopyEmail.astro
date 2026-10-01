@@ -1,0 +1,10 @@
+---
+import type { Locale } from '../../config/site';
+const { locale, email } = Astro.props as { locale: Locale; email: string };
+const fr = locale === 'fr';
+---
+<div class="copy-email" data-copy-email data-value={email}><a href={`mailto:${email}`}>{fr ? 'M’écrire' : 'Email me'} →</a><button type="button" data-copy-button>{fr ? 'Copier l’e-mail' : 'Copy email'}</button><span class="sr-only" aria-live="polite" data-copy-status></span></div>
+<script>
+  const fr = document.documentElement.lang === 'fr';
+  document.querySelectorAll('[data-copy-email]').forEach((wrapper) => { const button = wrapper.querySelector('[data-copy-button]'); const status = wrapper.querySelector('[data-copy-status]'); button?.addEventListener('click', async () => { const value = wrapper.getAttribute('data-value') || ''; try { if (!navigator.clipboard?.writeText) { window.prompt(fr ? 'Copiez cette adresse :' : 'Copy this address:', value); if (status) status.textContent = fr ? 'Adresse affichée pour copie manuelle.' : 'Address displayed for manual copy.'; return; } await navigator.clipboard.writeText(value); button.textContent = fr ? 'E-mail copié ✓' : 'Email copied ✓'; if (status) status.textContent = fr ? 'Adresse e-mail copiée dans le presse-papiers.' : 'Email address copied to clipboard.'; } catch { if (status) status.textContent = fr ? 'Copie impossible. Utilisez le lien M’écrire.' : 'Could not copy. Use the Email me link.'; } }); });
+</script>
