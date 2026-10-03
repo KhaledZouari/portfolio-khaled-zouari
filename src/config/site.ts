@@ -7,6 +7,10 @@ export const siteConfig = {
     'edutrack',
     'energyinsight-tunisia',
     'minidrawfx',
+    'enterprise-bi',
+    'online-bookstore',
+    'sales-analytics',
+    'clinisys',
   ] as const,
 } as const;
 

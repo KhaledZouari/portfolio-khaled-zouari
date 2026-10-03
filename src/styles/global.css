@@ -230,3 +230,5 @@ p { margin: 0; }
   .js [data-reveal] { opacity: 1; transform: none; }
   .flow-step, .flow-connector i, .workflow-item { opacity: 1; transform: none; animation: none !important; }
 }
+
+.evidence-note { color: var(--muted); font-size: .85rem; line-height: 1.6; } .complementary-heading { margin-top: var(--space-6); }

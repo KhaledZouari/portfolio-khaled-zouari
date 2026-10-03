@@ -12,7 +12,7 @@ const home = fr ? '/' : '/en/';
 const labels = {
   context: fr ? 'Contexte' : 'Context', role: fr ? 'Mon rôle' : 'My role',
   features: fr ? 'Fonctionnalités' : 'Features', architecture: 'Architecture',
-  ...(project.results ? { results: fr ? 'Résultats et captures' : 'Results and screenshots' } : {}),
+  ...((project.results || project.gallery?.length) ? { results: fr ? 'Résultats et captures' : 'Results and screenshots' } : {}),
   choices: fr ? 'Choix techniques' : 'Technical choices', security: fr ? 'Sécurité' : 'Security',
   tests: 'Tests', tradeoffs: fr ? 'Difficultés et compromis' : 'Challenges and trade-offs',
   improvements: fr ? 'Ce que j’améliorerais' : 'What I would improve', stack: 'Stack',
@@ -31,11 +31,12 @@ const labels = {
       <section class="case-section" id="role"><p class="eyebrow">02</p><h2>{labels.role}</h2><p>{project.role[locale]}</p></section>
       <section class="case-section" id="features"><p class="eyebrow">03</p><h2>{labels.features}</h2><ul>{project.features.map((item) => <li>{item[locale]}</li>)}</ul></section>
       <section class="case-section" id="architecture"><p class="eyebrow">04</p><h2>{labels.architecture}</h2><p>{project.architecture[locale]}</p>{project.slug === 'production-atelier' ? <ProductionWorkflow {locale} /> : <ProjectArchitecture {locale} project={project.slug} />}</section>
-      {project.results && <section class="case-section" id="results">
-        <p class="eyebrow">Power BI · {fr ? 'Évaluation indépendante' : 'Independent evaluation'}</p>
+      {(project.results || project.gallery?.length) && <section class="case-section" id="results">
+        <p class="eyebrow">{project.slug === 'energyinsight-tunisia' ? 'Power BI' : (fr ? 'Démonstration et périmètre' : 'Demonstration and scope')}</p>
         <h2>{labels.results}</h2>
-        <dl class="project-results">{project.results.metrics.map((metric) => <div><dt>{metric.label[locale]}</dt><dd>{metric.value[locale]}</dd></div>)}</dl>
-        <p>{project.results.summary[locale]}</p>
+        {project.results && <><dl class="project-results">{project.results.metrics.map((metric) => <div><dt>{metric.label[locale]}</dt><dd>{metric.value[locale]}</dd></div>)}</dl>
+        <p>{project.results.summary[locale]}</p></>}
+        {project.evidence && <p class="evidence-note">{project.evidence[locale]}</p>}
         <ProjectGallery images={(project.gallery ?? []).map((image) => ({ ...image, alt: image.alt[locale], caption: image.caption[locale] }))} />
       </section>}
       <section class="case-section" id="choices"><p class="eyebrow">05</p><h2>{labels.choices}</h2><ul>{project.choices.map((item) => <li>{item[locale]}</li>)}</ul></section>
@@ -43,7 +44,7 @@ const labels = {
       <section class="case-section" id="tests"><p class="eyebrow">07</p><h2>{labels.tests}</h2><p>{project.tests[locale]}</p></section>
       <section class="case-section" id="tradeoffs"><p class="eyebrow">08</p><h2>{labels.tradeoffs}</h2><p>{project.tradeoffs[locale]}</p></section>
       <section class="case-section" id="improvements"><p class="eyebrow">09</p><h2>{labels.improvements}</h2><ul>{project.improvements.map((item) => <li>{item[locale]}</li>)}</ul></section>
-      <section class="case-section" id="stack"><p class="eyebrow">10</p><h2>{labels.stack}</h2><ul class="tags">{project.stack.map((item) => <li class="tag">{item}</li>)}</ul><ProjectGallery images={[]} /><p><a class="button primary" href={project.repository} target="_blank" rel="noopener noreferrer">GitHub ↗</a></p></section>
+      <section class="case-section" id="stack"><p class="eyebrow">10</p><h2>{labels.stack}</h2><ul class="tags">{project.stack.map((item) => <li class="tag">{item}</li>)}</ul><p><a class="button primary" href={project.repository} target="_blank" rel="noopener noreferrer">GitHub ↗</a></p></section>
     </article>
   </div>
 </main>

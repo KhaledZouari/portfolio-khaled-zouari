@@ -4,7 +4,6 @@ import Footer from '../layout/Footer.astro';
 import ProofMap from '../interactive/ProofMap.astro';
 import ArchitectureFlow from '../interactive/ArchitectureFlow.astro';
 import CopyEmail from '../interactive/CopyEmail.astro';
-import ProductionWorkflow from '../projects/ProductionWorkflow.astro';
 import ProjectArchitecture from '../projects/ProjectArchitecture.astro';
 import { profile } from '../../data/profile';
 import { projects, featuredProjects } from '../../data/projects';
@@ -71,7 +70,7 @@ const premiumProjects = featuredProjects.filter((project) => project.slug !== 'p
           <ul class="tags" aria-label="Technologies">{production.stack.slice(0, 6).map((item) => <li class="tag">{item}</li>)}</ul>
           <div class="card-actions"><a class="button primary" href={`${prefix}/projects/${production.slug}/`}>{t.caseStudy} →</a><a class="button" href={production.repository} target="_blank" rel="noopener noreferrer">GitHub ↗</a></div>
         </div>
-        <div class="featured-project-visual"><p class="eyebrow">{fr ? 'Workflow métier' : 'Business workflow'}</p><ProductionWorkflow {locale} compact /></div>
+        <div class="featured-project-visual"><p class="eyebrow">{fr ? 'Application en fonctionnement' : 'Application in action'}</p>{production.gallery?.[0] && <a href={`${prefix}/projects/${production.slug}/#results`}><img class="project-cover" src={production.gallery[0].src} alt={production.gallery[0].alt[locale]} width={production.gallery[0].width} height={production.gallery[0].height} loading="lazy" decoding="async" /></a>}<p class="evidence-note">{production.evidence?.[locale]}</p></div>
       </article>
       <div class="projects-grid premium-projects">
         {premiumProjects.map((project, index) => (
@@ -79,14 +78,16 @@ const premiumProjects = featuredProjects.filter((project) => project.slug !== 'p
             <span class="project-index">0{index + 2} / {project.kind[locale]}</span>
             <h3>{project.name}</h3><p>{project.summary[locale]}</p>
             {project.gallery?.[0] ? <img class="project-cover" src={project.gallery[0].src} alt={project.gallery[0].alt[locale]} width={project.gallery[0].width} height={project.gallery[0].height} loading="lazy" decoding="async" /> : project.slug !== 'production-atelier' && <ProjectArchitecture {locale} project={project.slug} />}
+            {project.evidence && <p class="evidence-note">{project.evidence[locale]}</p>}
             <ul class="tags" aria-label="Technologies">{project.stack.slice(0, 5).map((item) => <li class="tag">{item}</li>)}</ul>
             <div class="card-actions"><a href={`${prefix}/projects/${project.slug}/`}>{t.caseStudy} →</a><a href={project.repository} target="_blank" rel="noopener noreferrer">GitHub ↗</a></div>
           </article>
         ))}
       </div>
+      <h3 class="complementary-heading">{fr ? 'Autres réalisations et travaux documentés' : 'Additional projects and documented work'}</h3>
       <div class="projects-grid complementary-projects">
         {projects.filter((p) => !p.featured).map((project) => (
-          <article class="project-card compact-card" data-reveal><span class="project-index">{project.kind[locale]}</span><h3>{project.name}</h3><p>{project.summary[locale]}</p>{project.slug === 'enterprise-bi' && <ProjectArchitecture {locale} project="enterprise-bi" />}<div class="card-actions"><a href={project.repository} target="_blank" rel="noopener noreferrer">GitHub ↗</a></div></article>
+          <article class="project-card compact-card" data-reveal><span class="project-index">{project.kind[locale]}</span><h3>{project.name}</h3><p>{project.summary[locale]}</p>{project.gallery?.[0] && <img class="project-cover" src={project.gallery[0].src} alt={project.gallery[0].alt[locale]} width={project.gallery[0].width} height={project.gallery[0].height} loading="lazy" decoding="async" />}{project.evidence && <p class="evidence-note">{project.evidence[locale]}</p>}<div class="card-actions"><a href={`${prefix}/projects/${project.slug}/`}>{t.caseStudy} →</a><a href={project.repository} target="_blank" rel="noopener noreferrer">GitHub ↗</a></div></article>
         ))}
       </div>
     </div>
