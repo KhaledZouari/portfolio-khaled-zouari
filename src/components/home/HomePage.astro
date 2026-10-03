@@ -20,7 +20,7 @@ const fr = locale === 'fr';
 const prefix = fr ? '' : '/en';
 const t = {
   projects: fr ? 'Projets sélectionnés' : 'Selected projects',
-  projectsLead: fr ? 'Des applications métier complètes, documentées par leur code, leur architecture et leurs limites.' : 'Complete business applications documented through code, architecture and acknowledged limits.',
+  projectsLead: fr ? 'Des applications métier et des analyses de données, documentées par leur code, leur architecture et leurs résultats.' : 'Business applications and data analytics documented through code, architecture and results.',
   caseStudy: fr ? 'Étude de cas' : 'Case study',
   repository: fr ? 'Code source' : 'Source code',
 };
@@ -78,7 +78,7 @@ const premiumProjects = featuredProjects.filter((project) => project.slug !== 'p
           <article class="project-card" data-reveal>
             <span class="project-index">0{index + 2} / {project.kind[locale]}</span>
             <h3>{project.name}</h3><p>{project.summary[locale]}</p>
-            {project.slug !== 'production-atelier' && <ProjectArchitecture {locale} project={project.slug} />}
+            {project.gallery?.[0] ? <img class="project-cover" src={project.gallery[0].src} alt={project.gallery[0].alt[locale]} width={project.gallery[0].width} height={project.gallery[0].height} loading="lazy" decoding="async" /> : project.slug !== 'production-atelier' && <ProjectArchitecture {locale} project={project.slug} />}
             <ul class="tags" aria-label="Technologies">{project.stack.slice(0, 5).map((item) => <li class="tag">{item}</li>)}</ul>
             <div class="card-actions"><a href={`${prefix}/projects/${project.slug}/`}>{t.caseStudy} →</a><a href={project.repository} target="_blank" rel="noopener noreferrer">GitHub ↗</a></div>
           </article>

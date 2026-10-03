@@ -5,6 +5,7 @@ export const siteConfig = {
     'production-atelier',
     'carpooling',
     'edutrack',
+    'energyinsight-tunisia',
     'minidrawfx',
   ] as const,
 } as const;

@@ -72,11 +72,12 @@ Les informations personnelles et professionnelles se trouvent dans `src/data`.
 Les composants ne doivent pas contenir de nouvelles affirmations métier. Une
 information non vérifiée doit rester hors du site public jusqu’à validation.
 
-Les quatre études de cas principales sont générées depuis `src/data/projects.ts` :
+Les cinq études de cas principales sont générées depuis `src/data/projects.ts` :
 
 - Production Atelier
 - Carpooling Platform
 - EduTrack
+- EnergyInsight Tunisia — traitement de facturation, Machine Learning et résultats Power BI
 - MiniDrawFX
 
 ## Internationalisation

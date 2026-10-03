@@ -15,6 +15,9 @@ export const skillEvidence: Record<string, string[]> = {
   Angular: ['EduTrack'],
   'Design Patterns': ['MiniDrawFX'],
   'C#': ['CliniSYS', 'Enterprise BI Dashboard'],
+  Python: ['EnergyInsight Tunisia'],
+  'Power BI': ['EnergyInsight Tunisia'],
+  MySQL: ['Carpooling Platform', 'EnergyInsight Tunisia'],
 };
 
 export function videoSources(webm: string, mp4?: string): Array<{ type: string; src: string }> {

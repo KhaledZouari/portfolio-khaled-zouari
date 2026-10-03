@@ -19,6 +19,11 @@ export interface Project {
   stack: string[];
   repository: string;
   featured: boolean;
+  results?: {
+    metrics: { label: Localized; value: Localized }[];
+    summary: Localized;
+  };
+  gallery?: { src: string; alt: Localized; caption: Localized; width: number; height: number }[];
 }
 
 export const projects: Project[] = [
@@ -99,6 +104,82 @@ export const projects: Project[] = [
     ],
     stack: ['Java 21', 'Spring Boot', 'Angular', 'TypeScript', 'PostgreSQL', 'JUnit'],
     repository: 'https://github.com/KhaledZouari/edutrack',
+  },
+  {
+    slug: 'energyinsight-tunisia', name: 'EnergyInsight Tunisia', featured: true,
+    kind: { fr: 'Data Engineering · Machine Learning · BI', en: 'Data Engineering · Machine Learning · BI' },
+    summary: {
+      fr: 'Transformer 4,48 millions de factures en indicateurs de consommation et en scores pour prioriser les contrôles clients.',
+      en: 'Turn 4.48 million invoices into consumption indicators and customer scores to prioritize inspections.',
+    },
+    context: {
+      fr: 'Projet académique d’analyse de facturation à partir du dataset fourni par la STEG et diffusé par Zindi. Le périmètre traité couvre 135 493 clients et 3 079 406 factures électriques. La question métier est de cibler les contrôles tout en mesurant la charge liée aux fausses alertes.',
+      en: 'Academic billing analytics project using a dataset attributed to STEG and distributed by Zindi. The implemented scope covers 135,493 customers and 3,079,406 electricity invoices. The business question is how to prioritize inspections while measuring the burden of false alerts.',
+    },
+    role: {
+      fr: 'Construction de la chaîne Python, du nettoyage et des agrégations, de la couche MySQL, de la comparaison des modèles et de la restitution Power BI ; documentation de la provenance, des contrôles de cohérence et des limites métier.',
+      en: 'Built the Python processing pipeline, cleaning and aggregations, MySQL analytics layer, model comparison and Power BI reporting; documented provenance, consistency checks and business limitations.',
+    },
+    features: [
+      { fr: 'Traitement des factures par blocs de 200 000 lignes et conversion explicite des dates', en: 'Invoice processing in 200,000-row chunks with explicit date parsing' },
+      { fr: 'Statistiques de consommation par client et agrégats par mois de facturation', en: 'Customer consumption statistics and invoice-month aggregates' },
+      { fr: 'Comparaison de trois classifieurs avec sélection du modèle et du seuil sur validation', en: 'Comparison of three classifiers with model and threshold selection on validation data' },
+      { fr: 'Trois pages Power BI : vue générale, segmentation des risques et performances sur test', en: 'Three Power BI pages: overview, risk segmentation and held-out performance' },
+    ],
+    architecture: {
+      fr: 'CSV sources → inspection et nettoyage Python → variables clients et agrégats mensuels → MySQL → pipelines scikit-learn → résultats vérifiés → Power BI.',
+      en: 'Source CSVs → Python inspection and cleaning → customer features and monthly aggregates → MySQL → scikit-learn pipelines → verified results → Power BI.',
+    },
+    choices: [
+      { fr: 'Séparation stratifiée par client : 60 % entraînement, 20 % validation, 20 % test ; prétraitements appris dans la Pipeline sur l’entraînement uniquement.', en: 'Customer-level stratified split: 60% training, 20% validation, 20% test; preprocessing fitted inside the Pipeline on training data only.' },
+      { fr: 'Classes pondérées et comparaison à une baseline toujours négative, pour interpréter une cible minoritaire de 5,58 %.', en: 'Class weighting and an always-negative baseline to interpret a minority target with 5.58% prevalence.' },
+      { fr: 'Distinction entre consommation nulle et absence de facture : 678 clients conservés dans le reporting sans score artificiel.', en: 'Zero consumption distinguished from missing invoice history: 678 customers retained in reporting without an artificial score.' },
+      { fr: 'Empreintes des fichiers, sorties provisoires et vérification de cohérence CSV/MySQL avant publication.', en: 'File hashes, staged outputs and CSV/MySQL consistency checks before publication.' },
+    ],
+    security: {
+      fr: 'Secrets de connexion conservés hors Git. Le dépôt et les captures publiques présentent le code et les résultats agrégés ; les données individuelles, prédictions détaillées et fichiers PBIX contenant le dataset restent locaux.',
+      en: 'Connection secrets are kept outside Git. The repository and public captures contain code and aggregate results; individual data, detailed predictions and dataset-bearing PBIX files remain local.',
+    },
+    tests: {
+      fr: 'Quatre tests de régression réussis sur les dates, les types SQL, les variables et les identifiants SQL ; GitHub Actions vérifie les dépendances et le code. La vérification locale complète enregistrée comporte 128 contrôles réussis.',
+      en: 'Four passing regression tests cover dates, SQL types, feature independence and SQL identifiers; GitHub Actions checks dependencies and code. The recorded full local verification contains 128 successful checks.',
+    },
+    tradeoffs: {
+      fr: 'Le modèle classe rétrospectivement les clients, sans date de diagnostic permettant de démontrer une détection anticipée. Au seuil retenu, 652 cas positifs sont retrouvés mais 3 202 fausses alertes sont générées sur le test. Les scores ne sont pas démontrés calibrés et les factures antérieures à 2005 demandent une vérification de provenance.',
+      en: 'The model classifies customers retrospectively, without diagnosis dates to demonstrate early detection. At the selected threshold, it finds 652 positive cases but generates 3,202 false alerts on the test set. Scores are not demonstrated calibrated, and pre-2005 invoices need provenance review.',
+    },
+    improvements: [
+      { fr: 'Confirmer les dates, les unités et la portée de l’étiquette de fraude ; normaliser par période de facturation.', en: 'Confirm dates, units and the scope of the fraud label; normalize by billing-period length.' },
+      { fr: 'Choisir le seuil selon la capacité et le coût des contrôles, puis valider une cohorte plus récente et indépendante.', en: 'Choose the threshold using inspection capacity and cost, then validate on a newer independent cohort.' },
+    ],
+    stack: ['Python', 'Pandas', 'MySQL', 'scikit-learn', 'Power BI', 'SQLAlchemy'],
+    repository: 'https://github.com/KhaledZouari/energyinsight-tunisia',
+    results: {
+      metrics: [
+        { label: { fr: 'Factures sources', en: 'Source invoices' }, value: { fr: '4,48 M', en: '4.48 M' } },
+        { label: { fr: 'Clients du test indépendant', en: 'Held-out test customers' }, value: { fr: '26 963', en: '26,963' } },
+        { label: { fr: 'Précision sur test', en: 'Test precision' }, value: { fr: '16,92 %', en: '16.92%' } },
+        { label: { fr: 'Rappel sur test', en: 'Test recall' }, value: { fr: '43,12 %', en: '43.12%' } },
+      ],
+      summary: {
+        fr: 'HistGradientBoosting est retenu avec un seuil de 0,6484. Sur 26 963 clients indépendants, le modèle obtient une ROC-AUC de 0,7695 et un F1 de 0,2430. Il détecte 652 des 1 512 cas positifs parmi 3 854 alertes. Ces résultats étayent un prototype de priorisation des contrôles, avec une charge importante de fausses alertes. Les vues générales sont descriptives ; seules les métriques du test mesurent la performance indépendante.',
+        en: 'HistGradientBoosting is selected at a threshold of 0.6484. On 26,963 held-out customers, it achieves ROC-AUC 0.7695 and F1 0.2430. It identifies 652 of 1,512 positive cases among 3,854 alerts. These results support a prototype for inspection prioritization, with a substantial false-alert burden. Overview pages are descriptive; only test metrics measure independent performance.',
+      },
+    },
+    gallery: [
+      { src: '/images/energyinsight/powerbi-overview.png', width: 1306, height: 693,
+        alt: { fr: 'Vue Power BI avec les indicateurs clients, factures, consommation et répartition des niveaux de risque.', en: 'Power BI overview with customer, invoice, billed consumption and risk-band indicators.' },
+        caption: { fr: 'Vue générale — indicateurs du dataset et évolution des consommations par mois de facturation.', en: 'Overview — dataset indicators and consumption totals grouped by invoice month.' } },
+      { src: '/images/energyinsight/powerbi-risk-segmentation.png', width: 524, height: 293,
+        alt: { fr: 'Graphique Power BI des niveaux de risque par catégorie de client.', en: 'Power BI chart of score-band distribution by customer category.' },
+        caption: { fr: 'Segmentation — répartition des bandes de score par catégorie de client.', en: 'Segmentation — score-band distribution by customer category.' } },
+      { src: '/images/energyinsight/powerbi-risk-regions.png', width: 404, height: 395,
+        alt: { fr: 'Graphique Power BI du nombre de clients prédits positifs par code de région.', en: 'Power BI chart of positive-prediction counts by region code.' },
+        caption: { fr: 'Analyse régionale — nombre d’alertes par code de région, et non taux de fraude régional.', en: 'Regional analysis — alert counts by region code, rather than regional fraud rates.' } },
+      { src: '/images/energyinsight/powerbi-model-performance.png', width: 1306, height: 645,
+        alt: { fr: 'Résultats Power BI du test : précision 16,92 %, rappel 43,12 %, F1 24,30 % et matrice de confusion.', en: 'Power BI test results: precision 16.92%, recall 43.12%, F1 24.30% and confusion matrix.' },
+        caption: { fr: 'Évaluation indépendante — métriques du test et matrice de confusion. Captures réelles du rapport local, dont les libellés sont en français.', en: 'Independent evaluation — test metrics and confusion matrix. Actual captures of the local report, whose labels are in French.' } },
+    ],
   },
   {
     slug: 'minidrawfx', name: 'MiniDrawFX', featured: true,

@@ -6,6 +6,7 @@ const architectures: Record<string, { nodes: string[]; notes?: string[] }> = {
   carpooling: { nodes: [fr ? 'Voyageur · Conducteur · Administrateur' : 'Traveller · Driver · Administrator', 'API REST', 'Spring Boot + Spring Security', 'MySQL'], notes: [fr ? 'Recherche · réservation · validation · avis' : 'Search · booking · validation · review'] },
   edutrack: { nodes: ['Angular', fr ? 'API sécurisée' : 'Secured API', 'Spring Boot', fr ? 'Services / logique métier' : 'Services / business logic', 'PostgreSQL'] },
   'enterprise-bi': { nodes: ['Sources', 'SSIS', 'Data Warehouse', 'SSAS', 'MDX', 'ASP.NET Dashboard'] },
+  'energyinsight-tunisia': { nodes: ['CSV', 'Python + Pandas', fr ? 'Variables clients · agrégats mensuels' : 'Customer features · monthly aggregates', 'MySQL', 'scikit-learn', 'Power BI'], notes: [fr ? 'Validation du modèle et du seuil avant évaluation sur test' : 'Model and threshold selection before held-out evaluation'] },
 };
 const patterns = [
   ['Factory', fr ? 'Crée les formes et sélectionne le repository.' : 'Creates shapes and selects the repository.'],

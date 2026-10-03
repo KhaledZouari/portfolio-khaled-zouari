@@ -12,6 +12,7 @@ const home = fr ? '/' : '/en/';
 const labels = {
   context: fr ? 'Contexte' : 'Context', role: fr ? 'Mon rôle' : 'My role',
   features: fr ? 'Fonctionnalités' : 'Features', architecture: 'Architecture',
+  ...(project.results ? { results: fr ? 'Résultats et captures' : 'Results and screenshots' } : {}),
   choices: fr ? 'Choix techniques' : 'Technical choices', security: fr ? 'Sécurité' : 'Security',
   tests: 'Tests', tradeoffs: fr ? 'Difficultés et compromis' : 'Challenges and trade-offs',
   improvements: fr ? 'Ce que j’améliorerais' : 'What I would improve', stack: 'Stack',
@@ -30,6 +31,13 @@ const labels = {
       <section class="case-section" id="role"><p class="eyebrow">02</p><h2>{labels.role}</h2><p>{project.role[locale]}</p></section>
       <section class="case-section" id="features"><p class="eyebrow">03</p><h2>{labels.features}</h2><ul>{project.features.map((item) => <li>{item[locale]}</li>)}</ul></section>
       <section class="case-section" id="architecture"><p class="eyebrow">04</p><h2>{labels.architecture}</h2><p>{project.architecture[locale]}</p>{project.slug === 'production-atelier' ? <ProductionWorkflow {locale} /> : <ProjectArchitecture {locale} project={project.slug} />}</section>
+      {project.results && <section class="case-section" id="results">
+        <p class="eyebrow">Power BI · {fr ? 'Évaluation indépendante' : 'Independent evaluation'}</p>
+        <h2>{labels.results}</h2>
+        <dl class="project-results">{project.results.metrics.map((metric) => <div><dt>{metric.label[locale]}</dt><dd>{metric.value[locale]}</dd></div>)}</dl>
+        <p>{project.results.summary[locale]}</p>
+        <ProjectGallery images={(project.gallery ?? []).map((image) => ({ ...image, alt: image.alt[locale], caption: image.caption[locale] }))} />
+      </section>}
       <section class="case-section" id="choices"><p class="eyebrow">05</p><h2>{labels.choices}</h2><ul>{project.choices.map((item) => <li>{item[locale]}</li>)}</ul></section>
       <section class="case-section" id="security"><p class="eyebrow">06</p><h2>{labels.security}</h2><p>{project.security[locale]}</p></section>
       <section class="case-section" id="tests"><p class="eyebrow">07</p><h2>{labels.tests}</h2><p>{project.tests[locale]}</p></section>
