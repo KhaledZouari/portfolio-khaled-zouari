@@ -6,9 +6,10 @@ const fr = locale === 'fr';
 const nodes = architectureEvidence.map((item) => ({ ...item, tech: item.layer, projects: item.projects.join(' · ') }));
 ---
 <aside class="architecture-signature" aria-labelledby="architecture-title" data-architecture-flow data-reveal>
-  <div class="architecture-heading"><p class="eyebrow">{fr ? 'Architecture démontrée' : 'Demonstrated architecture'}</p><h2 id="architecture-title">Full Stack Flow</h2></div>
+  <div class="architecture-heading"><p class="eyebrow">{fr ? 'Architecture démontrée' : 'Demonstrated architecture'}</p><h2 id="architecture-title">{fr ? 'Logiciel & données' : 'Software & data'}</h2><p class="flow-scope">{fr ? 'Applications métier' : 'Business applications'}</p></div>
   <div class="architecture-stack">{nodes.map((node, index) => <div class="flow-step" data-step={index}><button type="button" aria-pressed={index === 0 ? 'true' : 'false'} data-flow-node data-projects={node.projects}><span class="flow-layer">0{index + 1} · {node.tech}</span><strong>{node.label}</strong></button>{index < nodes.length - 1 && <span class="flow-connector" aria-hidden="true"><i></i></span>}</div>)}</div>
   <div class="flow-proof" aria-live="polite"><span>{fr ? 'Utilisé dans' : 'Used in'}</span><strong data-flow-proof>{nodes[0].projects}</strong></div>
+  <div class="data-workflow"><p class="eyebrow">Data · Machine Learning</p><p>Python → MySQL → scikit-learn → Power BI</p><a href={fr ? '/projects/energyinsight-tunisia/' : '/en/projects/energyinsight-tunisia/'}>EnergyInsight Tunisia →</a></div>
 </aside>
 <script>
   document.querySelectorAll('[data-architecture-flow]').forEach((flow) => {

@@ -115,6 +115,10 @@ p { margin: 0; }
 .flow-proof { display: grid; gap: 2px; margin-top: var(--space-4); padding-top: var(--space-3); border-top: 1px solid var(--line); }
 .flow-proof span { color: var(--muted); font-size: .75rem; }
 .flow-proof strong { font-size: .82rem; }
+.flow-scope { color: var(--muted); font-size: .8rem; }
+.data-workflow { display: grid; gap: var(--space-2); margin-top: var(--space-4); padding-top: var(--space-4); border-top: 1px solid var(--line); }
+.data-workflow > p:not(.eyebrow) { color: var(--muted); font-size: .8rem; overflow-wrap: anywhere; }
+.data-workflow a { justify-self: start; font-size: .82rem; font-weight: 600; }
 @keyframes flow-in { to { opacity: 1; } }
 @keyframes data-flow { to { transform: translateY(100%); } }
 .projects-grid { display: grid; gap: 1rem; }

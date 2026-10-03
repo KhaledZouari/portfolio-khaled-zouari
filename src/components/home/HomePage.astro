@@ -41,11 +41,11 @@ const premiumProjects = featuredProjects.filter((project) => project.slug !== 'p
       <div class="hero-copy" data-reveal>
         <div class="hero-identity">
           <Picture class="hero-portrait" src={portrait} formats={['avif', 'webp']} widths={[160, 240]} sizes="(max-width: 420px) 80px, 104px" alt={fr ? 'Portrait professionnel de Khaled Zouari' : 'Professional portrait of Khaled Zouari'} loading="eager" fetchpriority="high" />
-          <div><p class="eyebrow">Full Stack · Java · React</p><p class="identity-location">Rouen, France · {fr ? 'Mobilité nationale' : 'Open across France'}</p></div>
+          <div><p class="eyebrow">{profile.focus[locale]}</p><p class="identity-location">Rouen, France · {fr ? 'Mobilité nationale' : 'Open across France'}</p></div>
         </div>
         <h1>Khaled Zouari</h1>
         <p class="hero-role">{profile.role[locale]}</p>
-        <p class="lead">{fr ? 'Je conçois des applications métier de bout en bout : interfaces, API sécurisées, modèles de données et outils de suivi.' : 'I build business applications end to end: interfaces, secured APIs, data models and monitoring tools.'}</p>
+        <p class="lead">{profile.intro[locale]}</p>
         <p class="availability">{profile.availability[locale]}</p>
         <div class="hero-actions">
           <a class="button primary" href="#projects">{fr ? 'Voir mes projets' : 'View my projects'}</a>
@@ -98,9 +98,9 @@ const premiumProjects = featuredProjects.filter((project) => project.slug !== 'p
 
   <section class="section" id="education"><div class="container"><div class="section-head"><p class="eyebrow">04 · {fr ? 'Formation' : 'Education'}</p><h2>{fr ? 'Parcours d’ingénieur' : 'Engineering education'}</h2></div><div class="timeline">{education.map((item) => <article class="timeline-item"><div class="timeline-meta">{item.period}</div><div class="timeline-copy"><h3>{item.school}</h3><p>{item.course[locale]}</p></div></article>)}</div></div></section>
 
-  <section class="section" id="about"><div class="container about-grid"><div><p class="eyebrow">05 · {fr ? 'À propos' : 'About'}</p><h2>{fr ? 'Relier le métier au code' : 'Connecting business and code'}</h2></div><div class="section-head"><p class="lead">{fr ? 'Mon parcours combine développement logiciel, bases de données et compréhension des opérations en environnement industriel. Je recherche un stage où contribuer à des fonctionnalités utiles, de la conception jusqu’à la validation.' : 'My background combines software development, databases and an understanding of operations in an industrial environment. I am looking for an internship where I can contribute to useful features from design through validation.'}</p><div class="language-list"><span>{fr ? 'Arabe · langue maternelle' : 'Arabic · native'}</span><span>{fr ? 'Français · B2' : 'French · B2'}</span><span>{fr ? 'Anglais · B2' : 'English · B2'}</span></div></div></div></section>
+  <section class="section" id="about"><div class="container about-grid"><div><p class="eyebrow">05 · {fr ? 'À propos' : 'About'}</p><h2>{fr ? 'Relier le métier, le logiciel et les données' : 'Connecting business, software and data'}</h2></div><div class="section-head"><p class="lead">{profile.about[locale]}</p><div class="language-list"><span>{fr ? 'Arabe · langue maternelle' : 'Arabic · native'}</span><span>{fr ? 'Français · B2' : 'French · B2'}</span><span>{fr ? 'Anglais · B2' : 'English · B2'}</span></div></div></div></section>
 
-  <section class="section" id="contact"><div class="container contact-grid"><div><p class="eyebrow">06 · Contact</p><h2>{fr ? 'Vous cherchez un stagiaire Full Stack pour mars 2027 ?' : 'Looking for a full-stack intern for March 2027?'}</h2></div><div class="contact-box"><p>{fr ? 'Disponible pour un stage d’ingénieur logiciel ou développeur Full Stack à partir du 1er mars 2027.' : 'Available for a software engineering or full-stack internship from 1 March 2027.'}</p><CopyEmail {locale} email={profile.email} /><div class="social-links"><a href={profile.github} target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href={profile.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn ↗</a><a href={profile.cv} download>CV ↓</a></div></div></div></section>
+  <section class="section" id="contact"><div class="container contact-grid"><div><p class="eyebrow">06 · Contact</p><h2>{profile.contactTitle[locale]}</h2></div><div class="contact-box"><p>{profile.internshipSummary[locale]}</p><CopyEmail {locale} email={profile.email} /><div class="social-links"><a href={profile.github} target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href={profile.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn ↗</a><a href={profile.cv} download>CV ↓</a></div></div></div></section>
 </main>
 <Footer {locale} />
 <script type="application/ld+json" set:html={JSON.stringify(personSchema)} />

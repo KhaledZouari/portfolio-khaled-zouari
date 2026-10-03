@@ -1,8 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
   <rect width="1200" height="630" fill="#f7f6f2"/>
   <rect x="72" y="70" width="1056" height="490" rx="24" fill="#fff" stroke="#d9d9d4"/>
-  <text x="130" y="210" font-family="Arial,sans-serif" font-size="30" fill="#2446d8">FULL STACK · JAVA · REACT</text>
+  <text x="130" y="210" font-family="Arial,sans-serif" font-size="30" fill="#2446d8">SOFTWARE · DATA · APPLIED ML</text>
   <text x="130" y="330" font-family="Arial,sans-serif" font-weight="700" font-size="86" fill="#16181d">Khaled Zouari</text>
-  <text x="130" y="410" font-family="Arial,sans-serif" font-size="34" fill="#61656f">Software engineering portfolio</text>
+  <text x="130" y="410" font-family="Arial,sans-serif" font-size="34" fill="#61656f">Software engineering &amp; data analytics portfolio</text>
   <circle cx="1040" cy="474" r="34" fill="#2446d8"/>
 </svg>

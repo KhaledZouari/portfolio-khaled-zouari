@@ -2,12 +2,13 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import HomePage from '../components/home/HomePage.astro';
 import '../styles/global.css';
+import { profile } from '../data/profile';
 ---
 
 <BaseLayout
   lang="fr"
-  title="Khaled Zouari — Développement Full Stack Java / React"
-  description="Portfolio de Khaled Zouari, élève ingénieur en informatique à la recherche d'un stage Full Stack."
+  title={profile.pageTitle.fr}
+  description={profile.metaDescription.fr}
 >
   <HomePage locale="fr" />
 </BaseLayout>

@@ -1,8 +1,8 @@
 # Portfolio — Khaled Zouari
 
 Portfolio bilingue présentant le parcours, les compétences et les études de cas
-de Khaled Zouari, élève ingénieur en informatique orienté développement Full
-Stack Java / React.
+de Khaled Zouari, élève ingénieur en informatique : développement logiciel,
+analyse de données, Business Intelligence et Machine Learning appliqué.
 
 ## Stack
 
