@@ -1,0 +1,18 @@
+{
+  "captured_on": "2026-10-03",
+  "kind": "runtime screenshots",
+  "images": [
+    {
+      "file": "home-fr.png",
+      "width": 1440,
+      "height": 1000,
+      "sha256": "a5f5bb745d1ee9a54bc9ff851b2df6f34fb7d7dff1fcf460f8e9fe79e5fb82b6"
+    },
+    {
+      "file": "home-en.png",
+      "width": 1440,
+      "height": 1000,
+      "sha256": "1d02a142c39aad9efd2bb6eeada7ffe6e9b29d745659717d90991dec6a6a80ef"
+    }
+  ]
+}

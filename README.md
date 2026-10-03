@@ -4,6 +4,16 @@ Portfolio bilingue présentant le parcours, les compétences et les études de c
 de Khaled Zouari, élève ingénieur en informatique : développement logiciel,
 analyse de données, Business Intelligence et Machine Learning appliqué.
 
+## Aperçu du portfolio
+
+[Consulter le site](https://khaled-zouari-portfolio.vercel.app/)
+
+Captures de la version publiée, vérifiée le 3 octobre 2026.
+
+![Accueil français du portfolio](docs/screenshots/home-fr.png)
+
+![English portfolio homepage](docs/screenshots/home-en.png)
+
 ## Stack
 
 - Astro 7 et TypeScript strict
