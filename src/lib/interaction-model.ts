@@ -6,6 +6,12 @@ export const architectureEvidence = [
 ] as const;
 
 export const skillEvidence: Record<string, string[]> = {
+  Python: ['EnergyInsight Tunisia'],
+  Pandas: ['EnergyInsight Tunisia'],
+  SQLAlchemy: ['EnergyInsight Tunisia'],
+  SSIS: ['Enterprise BI Dashboard'],
+  SSAS: ['Enterprise BI Dashboard'],
+  MDX: ['Enterprise BI Dashboard'],
   Java: ['Carpooling Platform', 'EduTrack', 'MiniDrawFX'],
   'Spring Boot': ['Carpooling Platform', 'EduTrack'],
   React: ['Production Atelier', 'Carpooling Platform'],
@@ -15,7 +21,6 @@ export const skillEvidence: Record<string, string[]> = {
   Angular: ['EduTrack'],
   'Design Patterns': ['MiniDrawFX'],
   'C#': ['CliniSYS', 'Enterprise BI Dashboard'],
-  Python: ['EnergyInsight Tunisia'],
   'Power BI': ['EnergyInsight Tunisia'],
   MySQL: ['Carpooling Platform', 'EnergyInsight Tunisia'],
 };

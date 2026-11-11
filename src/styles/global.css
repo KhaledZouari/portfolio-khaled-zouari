@@ -232,3 +232,5 @@ p { margin: 0; }
 }
 
 .evidence-note { color: var(--muted); font-size: .85rem; line-height: 1.6; } .complementary-heading { margin-top: var(--space-6); }
+
+.data-proof { padding-block: var(--space-3); border-top: 1px solid var(--line); font-weight: 600; }

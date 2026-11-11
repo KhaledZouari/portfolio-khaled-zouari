@@ -9,7 +9,7 @@ import { profile } from '../../data/profile';
 import { projects, featuredProjects } from '../../data/projects';
 import { experiences } from '../../data/experience';
 import { education } from '../../data/education';
-import { skillGroups } from '../../data/skills';
+import { skillGroups, dataCapabilities } from '../../data/skills';
 import type { Locale } from '../../config/site';
 import { Picture } from 'astro:assets';
 import portrait from '../../assets/khaled-zouari.png';
@@ -19,7 +19,7 @@ const fr = locale === 'fr';
 const prefix = fr ? '' : '/en';
 const t = {
   projects: fr ? 'Projets sélectionnés' : 'Selected projects',
-  projectsLead: fr ? 'Des applications métier et des analyses de données, documentées par leur code, leur architecture et leurs résultats.' : 'Business applications and data analytics documented through code, architecture and results.',
+  projectsLead: fr ? 'Du pipeline de données à l’application métier : des projets documentés par leur code, leur architecture et leurs résultats.' : 'From data pipelines to business applications: projects documented through code, architecture and results.',
   caseStudy: fr ? 'Étude de cas' : 'Case study',
   repository: fr ? 'Code source' : 'Source code',
 };
@@ -30,8 +30,8 @@ const personSchema = {
   address: { '@type': 'PostalAddress', addressLocality: 'Rouen', addressCountry: 'FR' },
   alumniOf: [{ '@type': 'CollegeOrUniversity', name: 'ESIGELEC' }, { '@type': 'CollegeOrUniversity', name: 'Institut International de Technologie' }],
 };
-const production = featuredProjects.find((project) => project.slug === 'production-atelier')!;
-const premiumProjects = featuredProjects.filter((project) => project.slug !== 'production-atelier');
+const spotlight = featuredProjects.find((project) => project.slug === 'energyinsight-tunisia')!;
+const premiumProjects = featuredProjects.filter((project) => project.slug !== 'energyinsight-tunisia').sort((a, b) => Number(b.slug === 'enterprise-bi') - Number(a.slug === 'enterprise-bi'));
 ---
 <Header {locale} />
 <main id="main">
@@ -60,17 +60,26 @@ const premiumProjects = featuredProjects.filter((project) => project.slug !== 'p
     </div>
   </section>
 
+  <section class="section data-expertise" id="data-engineering" aria-labelledby="data-title">
+    <div class="container">
+      <div class="section-head" data-reveal><p class="eyebrow">Data Engineering</p><h2 id="data-title">{fr ? 'Des données brutes aux usages métier' : 'From raw data to business use'}</h2><p class="lead">{fr ? 'Trois compétences mises en pratique dans mes projets académiques, avec des traitements, des contrôles et des modèles documentés.' : 'Three skills applied in my academic projects, supported by documented processing, checks and data models.'}</p></div>
+      <div class="projects-grid">
+        {dataCapabilities.map((item) => <article class="project-card" data-reveal><span class="project-index">{item.step} / Data</span><h3>{item.title[locale]}</h3><p>{item.description[locale]}</p><p class="data-proof">{item.proof[locale]}</p><div class="card-actions"><a href={`${prefix}/projects/${item.slug}/`}>{fr ? 'Explorer le projet' : 'Explore the project'} →</a></div></article>)}
+      </div>
+    </div>
+  </section>
+
   <section class="section" id="projects">
     <div class="container">
       <div class="section-head" data-reveal><p class="eyebrow">01 · {fr ? 'Travaux' : 'Work'}</p><h2>{t.projects}</h2><p class="lead">{t.projectsLead}</p></div>
       <article class="featured-project" data-reveal>
         <div class="featured-project-copy">
-          <span class="project-index">01 / {production.kind[locale]}</span>
-          <h3>{production.name}</h3><p class="lead">{production.summary[locale]}</p><p>{production.context[locale]}</p>
-          <ul class="tags" aria-label="Technologies">{production.stack.slice(0, 6).map((item) => <li class="tag">{item}</li>)}</ul>
-          <div class="card-actions"><a class="button primary" href={`${prefix}/projects/${production.slug}/`}>{t.caseStudy} →</a><a class="button" href={production.repository} target="_blank" rel="noopener noreferrer">GitHub ↗</a></div>
+          <span class="project-index">01 / {spotlight.kind[locale]}</span>
+          <h3>{spotlight.name}</h3><p class="lead">{spotlight.summary[locale]}</p><p>{spotlight.context[locale]}</p>
+          <ul class="tags" aria-label="Technologies">{spotlight.stack.slice(0, 6).map((item) => <li class="tag">{item}</li>)}</ul>
+          <div class="card-actions"><a class="button primary" href={`${prefix}/projects/${spotlight.slug}/`}>{t.caseStudy} →</a><a class="button" href={spotlight.repository} target="_blank" rel="noopener noreferrer">GitHub ↗</a></div>
         </div>
-        <div class="featured-project-visual"><p class="eyebrow">{fr ? 'Application en fonctionnement' : 'Application in action'}</p>{production.gallery?.[0] && <a href={`${prefix}/projects/${production.slug}/#results`}><img class="project-cover" src={production.gallery[0].src} alt={production.gallery[0].alt[locale]} width={production.gallery[0].width} height={production.gallery[0].height} loading="lazy" decoding="async" /></a>}<p class="evidence-note">{production.evidence?.[locale]}</p></div>
+        <div class="featured-project-visual"><p class="eyebrow">{fr ? 'Du traitement à la restitution BI' : 'From processing to BI reporting'}</p>{spotlight.gallery?.[0] && <a href={`${prefix}/projects/${spotlight.slug}/#results`}><img class="project-cover" src={spotlight.gallery[0].src} alt={spotlight.gallery[0].alt[locale]} width={spotlight.gallery[0].width} height={spotlight.gallery[0].height} loading="lazy" decoding="async" /></a>}<p class="evidence-note">{spotlight.evidence?.[locale]}</p></div>
       </article>
       <div class="projects-grid premium-projects">
         {premiumProjects.map((project, index) => (

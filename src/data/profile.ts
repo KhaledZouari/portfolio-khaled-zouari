@@ -1,33 +1,33 @@
 export const profile = {
   name: 'Khaled Zouari',
   role: {
-    fr: 'Élève ingénieur en informatique — Génie logiciel, Data & IA appliquée',
-    en: 'Computer engineering student — Software, Data & Applied Machine Learning',
+    fr: 'Élève ingénieur en informatique — Data Engineering & Génie logiciel',
+    en: 'Computer engineering student — Data Engineering & Software',
   },
-  focus: { fr: 'Logiciel · Data · Machine Learning', en: 'Software · Data · Machine Learning' },
+  focus: { fr: 'Data Engineering · BI · Logiciel', en: 'Data Engineering · BI · Software' },
   intro: {
-    fr: 'Je développe des applications métier et des solutions d’analyse : interfaces, API sécurisées, bases de données, pipelines Python et modèles de Machine Learning évalués.',
-    en: 'I build business applications and analytics solutions: interfaces, secured APIs, databases, Python data pipelines and evaluated machine-learning models.',
+    fr: 'Je transforme des données brutes en données exploitables : pipelines Python/SQL, contrôles de qualité, entrepôts de données et restitution BI. Mon expérience en développement logiciel me permet de relier ces traitements aux applications métier.',
+    en: 'I turn raw data into usable datasets through Python/SQL pipelines, quality checks, data warehouses and BI reporting. My software development experience helps me connect these workflows to business applications.',
   },
   about: {
-    fr: 'Mon parcours associe développement logiciel, bases de données et compréhension des opérations industrielles. Mon stage chez CliniSYS m’a permis de développer un module hospitalier en C#/.NET. Mes projets académiques complètent cette expérience par des plateformes Java/React/Angular, de la Business Intelligence et du Machine Learning supervisé avec Python. Je m’intéresse à la manière dont le logiciel et les données peuvent améliorer les décisions métier, avec des résultats vérifiables.',
-    en: 'My background combines software development, databases and an understanding of industrial operations. During my CliniSYS internship, I developed a hospital software module with C#/.NET. My academic projects extend that experience through Java/React/Angular platforms, Business Intelligence and supervised machine learning with Python. I focus on how software and data can improve business decisions through verifiable results.',
+    fr: 'Mon parcours associe Data Engineering, développement logiciel et compréhension des opérations industrielles. Avec EnergyInsight, j’ai construit une chaîne de traitement Python, du nettoyage des factures au chargement MySQL et à la restitution Power BI. Avec Enterprise BI, j’ai conçu un modèle en étoile, des flux SSIS et un cube SSAS. Mes expériences chez CliniSYS et Cartexia complètent ces projets par la pratique des bases de données et des applications métier.',
+    en: 'My background combines Data Engineering, software development and an understanding of industrial operations. With EnergyInsight, I worked on batch invoice processing, consistency checks and MySQL loading. With Enterprise BI, I designed a star schema, SSIS flows and an SSAS cube. During my CliniSYS internship, I developed a hospital software module with C#/.NET. My academic projects extend that experience through Java/React/Angular platforms, Business Intelligence and supervised machine learning with Python. I focus on how software and data can improve business decisions through verifiable results.',
   },
   contactTitle: {
-    fr: 'Vous cherchez un stagiaire en logiciel, data ou BI ?',
-    en: 'Looking for an intern in software, data or BI?',
+    fr: 'Vous cherchez un stagiaire en Data Engineering, BI ou logiciel ?',
+    en: 'Looking for a Data Engineering, BI or software intern?',
   },
   internshipSummary: {
-    fr: 'Disponible à partir du 1er mars 2027 pour un stage en développement logiciel, analyse de données ou Business Intelligence, avec une pratique du Machine Learning dans mes projets académiques.',
-    en: 'Available from 1 March 2027 for an internship in software development, data analytics or Business Intelligence, with machine-learning experience through academic projects.',
+    fr: 'Disponible à partir du 1er mars 2027 pour un stage en Data Engineering, Business Intelligence ou développement logiciel, avec une pratique du Machine Learning dans mes projets académiques.',
+    en: 'Available from 1 March 2027 for an internship in Data Engineering, Business Intelligence or software development, with machine-learning experience through academic projects.',
   },
   pageTitle: {
-    fr: 'Khaled Zouari — Génie logiciel, Data & IA appliquée',
-    en: 'Khaled Zouari — Software Engineering, Data & Applied ML',
+    fr: 'Khaled Zouari — Data Engineering & Génie logiciel',
+    en: 'Khaled Zouari — Data Engineering & Software Engineering',
   },
   metaDescription: {
-    fr: 'Portfolio de Khaled Zouari, élève ingénieur en informatique : applications métier, analyse de données, Business Intelligence et Machine Learning appliqué. Stage dès mars 2027.',
-    en: 'Khaled Zouari’s computer engineering portfolio: business applications, data analytics, Business Intelligence and applied machine learning. Available for an internship from March 2027.',
+    fr: 'Portfolio de Khaled Zouari : pipelines Python/SQL, qualité des données, Data Warehouse, Business Intelligence et applications métier. Stage dès mars 2027.',
+    en: 'Khaled Zouari’s computer engineering portfolio: Python/SQL pipelines, data quality, data warehouses, Business Intelligence and business applications. Available for an internship from March 2027.',
   },
   location: 'Rouen, France',
   mobility: { fr: 'Mobile dans toute la France', en: 'Open to opportunities across France' },

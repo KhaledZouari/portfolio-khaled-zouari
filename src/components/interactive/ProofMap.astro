@@ -9,7 +9,7 @@ const fr = locale === 'fr';
   <div class="proof-controls" aria-label={fr ? 'Technologies et projets associés' : 'Technologies and related projects'}>
     {Object.entries(evidence).map(([technology, projects], index) => <button type="button" aria-pressed={index === 0 ? 'true' : 'false'} data-tech={technology} data-projects={projects.join('|')}><span>{technology}</span><small>{fr ? 'Utilisée dans' : 'Used in'} {projects.length} {fr ? 'projet(s)' : 'project(s)'}</small></button>)}
   </div>
-  <div class="proof-result" aria-live="polite"><p>{fr ? 'Utilisée dans :' : 'Used in:'}</p><ul data-proof-result>{evidence.Java.map((project) => <li>{project}</li>)}</ul></div>
+  <div class="proof-result" aria-live="polite"><p>{fr ? 'Utilisée dans :' : 'Used in:'}</p><ul data-proof-result>{Object.values(evidence)[0].map((project) => <li>{project}</li>)}</ul></div>
 </div>
 <script>
   document.querySelectorAll('[data-proof-map]').forEach((map) => {
